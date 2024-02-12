@@ -1,6 +1,6 @@
 #!/bin/bash
 
-container_name="keycloak-docker"
+container_name="keycloak"
 # Vérifier si le conteneur existe
 if docker ps -a --format '{{.Names}}' | grep -q "^$container_name$"; then
     echo "Le conteneur $container_name existe."
