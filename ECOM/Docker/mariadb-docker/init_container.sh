@@ -1,6 +1,8 @@
 #!/bin/bash
 
 container_name="mariadb-docker"
+# Récupérer le répertoire du script
+script_dir=$(dirname "$(readlink -f "$0")")
 
 # Vérifier si le conteneur existe
 if docker ps -a --format '{{.Names}}' | grep -q "^$container_name$"; then
@@ -18,13 +20,12 @@ else
     #docker cp ddb.sql mariadb-docker:/ddb.sql
     #docker cp procedures.sql mariadb-docker:/procedures.sql
     docker exec -it mariadb-docker bash -c "echo 'CREATE DATABASE ecomddb;' | mysql -uroot -p$2"
-    docker exec -i mariadb-docker mysql -uroot -p$2 -D ecomddb < ddb.sql
-    docker exec -i mariadb-docker mysql -uroot -p -e "RENAME USER 'root'@'localhost' TO '$1'@'localhost';"
+    docker exec -i mariadb-docker mysql -uroot -p$2 -D ecomddb < "$script_dir/ddb.sql"
+    docker exec -i mariadb-docker mysql -uroot -p$2 -e "RENAME USER 'root'@'localhost' TO '$1'@'localhost';"
 
      #docker exec -i mariadb-docker mysql -uroot -p"tpRT9025" -D ecomddb < procedures.sql
 
-    # Récupérer le répertoire du script
-    script_dir=$(dirname "$(readlink -f "$0")")
+    
 
     # Ligne à ajouter dans le crontab
     cron_line="0 0 * * * $script_dir/mariadb_save.sh"
