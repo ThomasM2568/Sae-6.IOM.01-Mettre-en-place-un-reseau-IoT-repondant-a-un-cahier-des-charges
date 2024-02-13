@@ -14,7 +14,7 @@ if docker ps -a --format '{{.Names}}' | grep -q "^$container_name$"; then
 else
     echo "Le conteneur $container_name n'existe pas."
     # Ajoutez ici les actions à effectuer si le conteneur n'existe pas
-    docker run -d --name mariadb-docker -e MYSQL_ROOT_PASSWORD=$2 -p 3306:3306 -v mariadb_save:/var/lib/mysql mariadb 
+    docker run -d --name mariadb-docker -e TZ=Europe/Paris -e MYSQL_ROOT_PASSWORD=$2 -p 3306:3306 -v mariadb_save:/var/lib/mysql mariadb 
     docker exec mariadb-docker sh -c "apt update"
     docker exec mariadb-docker sh -c "apt install -y mysql-client"
     #docker cp ddb.sql mariadb-docker:/ddb.sql
