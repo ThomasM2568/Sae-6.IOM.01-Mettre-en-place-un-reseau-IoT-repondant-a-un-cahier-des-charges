@@ -9,6 +9,6 @@ if docker ps -a --format '{{.Names}}' | grep -q "^$container_name$"; then
     # Par exemple :
     # docker start $container_name
 else
-    sudo docker run -d --name mosquitto-docker -p 1883:1883 -v mosquitto_save:/config/mosquitto/ eclipse-mosquitto
-    sudo docker cp mosquitto.conf mosquitto-docker:/config/mosquitto/
+    sudo docker run -d --name mosquitto-docker -p 1883:1883 -v mosquitto_save:/mosquitto/config/ eclipse-mosquitto
+    sudo docker cp mosquitto.conf mosquitto-docker:/mosquitto/config/
 fi
